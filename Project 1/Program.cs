@@ -55,7 +55,6 @@ namespace Random
             bool advance = true;
             List<String> playerPicks = new List<String>(); //List of all players picked by coach/user
             List<String> costEffective = new List<String>(); //List to check if there is 3 top 3 players in coaches draft picks
-            DataTable playerDisplay = new DataTable();
             ConsoleKeyInfo keyValue;
 
             //Introduction
@@ -75,7 +74,6 @@ namespace Random
 
                     for (var y = 0; y < players.GetLength(1); y++)
                     {
-                        Object[] rows = { new Object[] { players[x, y] } };
                         WriteLine($"{x + 1}{y + 1}) {players[x, y]}");
                         WriteLine($"({state[x, y]}) ");
                         WriteLine($"{salary[x, y].ToString("c0")} ");
@@ -85,9 +83,11 @@ namespace Random
 
                 do
                 {
+                    //Method call to get user input
                     getInput(out row, out column, ref cumulativeSalary, out signingBonus, ref budget, ref salary);
                     playerPicks.Add(players[row, column]);
 
+                    //Checks if the pick is in the top 3 best players
                     if (column <= 2)
                     {
                         costEffective.Add(players[row, column]);
@@ -104,15 +104,18 @@ namespace Random
                     WriteLine($"The cumulative salary of all players selected: {cumulativeSalary.ToString("c0")}");
                     WriteLine($"You have {signingBonus.ToString("c0")} left for signing bonuses.");
 
+                    //Error catch to break out of loop if coach has 5 player picks
                     if (playerPicks.Count == 5)
                     {
                         break;
                     }
 
+                    //Calls restart method
                     restartInner(ref advance);
 
-                } while (advance); //End of inner do - while loop
+                } while (advance); //End of inner do/while loop
 
+                //Method calls for end of program
                 draftInfo(ref playerPicks, ref costEffective, ref cumulativeSalary, ref signingBonus);
                 restart(out keyValue, ref playerPicks);
 
@@ -121,6 +124,7 @@ namespace Random
 
         public static void welcome(out ConsoleKeyInfo keyValue)
         {
+            //Welcome message at start of the program
             WriteLine("Welcome to the NFL Draft Picks\n");
             WriteLine("You may choose up to 5 players and have a budget of $95 million dollars.");
             WriteLine("Please press Enter to start the program or any other key to exit...");
@@ -129,6 +133,7 @@ namespace Random
 
         public static void getInput(out int row, out int column, ref int cumulativeSalary, out int signingBonus, ref int budget, ref int[,] salary)
         {
+            //Gets user input and sets up the overall salary of players and money available for signing bonus
             string userInput;
             WriteLine("\nPlease enter the number of the player you wish to select: ");
             userInput = ReadLine();
@@ -142,6 +147,7 @@ namespace Random
 
         public static void restart(out ConsoleKeyInfo keyValue, ref List<String> playerPicks)
         {
+            //Restarts the whole program based off of what key the user presses
             WriteLine("\nTo restart the program, please press Enter or any other key to exit...");
             keyValue = ReadKey();
 
@@ -155,6 +161,7 @@ namespace Random
 
         public static void draftInfo(ref List<String> playerPicks, ref List<String> costEffective, ref int cumulativeSalary, ref int signingBonus)
         {
+            //Display of draft information based on the coaches picks
             WriteLine("\nCongratulations! You have completed your NFL Draft Picks.");
             WriteLine("\nYou have selected these players: ");
 
@@ -174,6 +181,7 @@ namespace Random
 
         public static void restartInner(ref bool advance)
         {
+            //Restart of inner loop if the user would like to enter additional players
             string sentinel;
             WriteLine("\nTo enter another player, press Y or N to exit...");
             sentinel = ReadLine();
