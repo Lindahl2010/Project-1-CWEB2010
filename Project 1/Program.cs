@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 using static System.Console;
 
 namespace Random
@@ -54,6 +55,7 @@ namespace Random
             bool advance = true;
             List<String> playerPicks = new List<String>(); //List of all players picked by coach/user
             List<String> costEffective = new List<String>(); //List to check if there is 3 top 3 players in coaches draft picks
+            DataTable playerDisplay = new DataTable();
             ConsoleKeyInfo keyValue;
 
             //Introduction
@@ -73,6 +75,7 @@ namespace Random
 
                     for (var y = 0; y < players.GetLength(1); y++)
                     {
+                        Object[] rows = { new Object[] { players[x, y] } };
                         WriteLine($"{x + 1}{y + 1}) {players[x, y]}");
                         WriteLine($"({state[x, y]}) ");
                         WriteLine($"{salary[x, y].ToString("c0")} ");
@@ -97,7 +100,7 @@ namespace Random
                     }
 
                     //Prints out the selected player and his salary as well as the cumulative salary of all players picked.
-                    WriteLine($"\nYou have selected {players[row, column]} from {state[row, column]} with a total salary of {salary[row, column].ToString("c0")}.");
+                    WriteLine($"\nYou have selected {players[row, column]} from {state[row, column]} with a total salary of: {salary[row, column].ToString("c0")}");
                     WriteLine($"The cumulative salary of all players selected: {cumulativeSalary.ToString("c0")}");
                     WriteLine($"You have {signingBonus.ToString("c0")} left for signing bonuses.");
 
