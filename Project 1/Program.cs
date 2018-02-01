@@ -68,13 +68,14 @@ namespace Random
                 //Display of players
                 for (var x = 0; x < players.GetLength(0); x++)
                 {
+
                     WriteLine($"{position[x]} ");
 
                     for (var y = 0; y < players.GetLength(1); y++)
                     {
                         WriteLine($"{x + 1}{y + 1}) {players[x, y]}");
                         WriteLine($"({state[x, y]}) ");
-                        WriteLine($"${salary[x, y]} ");
+                        WriteLine($"{salary[x, y].ToString("c0")} ");
                     }
                     Write("\n");
                 }
@@ -96,9 +97,9 @@ namespace Random
                     }
 
                     //Prints out the selected player and his salary as well as the cumulative salary of all players picked.
-                    WriteLine($"\nYou have selected {players[row, column]} from {state[row, column]} with a total salary of ${salary[row, column]}.");
-                    WriteLine($"The cumulative salary of all players selected: ${cumulativeSalary}");
-                    WriteLine($"You have ${signingBonus} left for signing bonuses.");
+                    WriteLine($"\nYou have selected {players[row, column]} from {state[row, column]} with a total salary of {salary[row, column].ToString("c0")}.");
+                    WriteLine($"The cumulative salary of all players selected: {cumulativeSalary.ToString("c0")}");
+                    WriteLine($"You have {signingBonus.ToString("c0")} left for signing bonuses.");
 
                     if (playerPicks.Count == 5)
                     {
@@ -159,8 +160,8 @@ namespace Random
                 WriteLine($"{i} ");
             }
 
-            WriteLine($"\nTotal cumulative salary of selected players: ${cumulativeSalary} ");
-            WriteLine($"\nTotal signing bonus available for selected players: ${signingBonus} ");
+            WriteLine($"\nTotal cumulative salary of selected players: {cumulativeSalary.ToString("c0")} ");
+            WriteLine($"\nTotal signing bonus available for selected players: {signingBonus.ToString("c0")} ");
 
             if (costEffective.Count == 3 && cumulativeSalary < 65000000)
             {
